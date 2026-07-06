@@ -7,7 +7,7 @@ function News(props) {
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [totalResults,setTotalResults] = useState(0);
+  const [,setTotalResults] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const capitalize = (type) => {
     return type.charAt(0).toUpperCase() + type.slice(1);

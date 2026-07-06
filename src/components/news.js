@@ -36,9 +36,6 @@ function News(props) {
     setLoading(true);
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log("articles.length:", articles.length);
-    console.log("totalResults:", parsedData.totalResults);
-    console.log("new articles:", parsedData.articles.length);
     if (!parsedData.articles || parsedData.articles.length === 0) {
       setHasMore(false);
       setLoading(false);
@@ -63,7 +60,6 @@ function News(props) {
         <div className="container my-2">
           <div className="row ">
             {articles.map((element) => {
-              console.log(element.url);
               return (
                 <div className="col-md-4" key={element.url}>
                   <NewsItem

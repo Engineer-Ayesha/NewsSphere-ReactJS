@@ -17,13 +17,13 @@ function News(props) {
     document.title = `${capitalize(category)} - NewsSphere`;
     const componentDidMount = async () => {
       setProgress(10);
-      const url = `https://newsapi.org/v2/top-headlines?country=us&page=1&pageSize=${pageSize} &category=${category}&apiKey=${apiKey}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=us&page=1&pageSize=${pageSize}&category=${category}&apiKey=${apiKey}`;
       setLoading(true);
       let data = await fetch(url);
       setProgress(30);
       let parsedData = await data.json();
       setProgress(50);
-      setArticles(parsedData.articles);
+      setArticles(parsedData?.articles || []);
       setTotalResults(parsedData.totalResults);
       setLoading(false);
       setProgress(100);
@@ -31,7 +31,7 @@ function News(props) {
     componentDidMount();
   }, [category, pageSize, apiKey, setProgress]);
   const fetchMoreData = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=us&page=${page + 1}&pageSize=${pageSize} &category=${category}&apiKey=${apiKey}`;
+    const url = `https://newsapi.org/v2/top-headlines?country=us&page=${page+1}&pageSize=${pageSize}&category=${category}&apiKey=${apiKey}`;
     setPage(page + 1);
     setLoading(true);
     let data = await fetch(url);

@@ -7,7 +7,7 @@ function News(props) {
   const [articles, setArticles] = useState([]);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-  const [totalResults,setTotalResults] = useState(0);
+  const [,setTotalResults] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const capitalize = (type) => {
     return type.charAt(0).toUpperCase() + type.slice(1);
@@ -17,13 +17,13 @@ function News(props) {
     document.title = `${capitalize(category)} - NewsSphere`;
     const componentDidMount = async () => {
       setProgress(10);
-      const url = `https://newsapi.org/v2/top-headlines?country=us&page=1&pageSize=${pageSize} &category=${category}&apiKey=${apiKey}`;
+      const url = `https://newsapi.org/v2/top-headlines?country=us&page=1&pageSize=${pageSize}&category=${category}&apiKey=${apiKey}`;
       setLoading(true);
       let data = await fetch(url);
       setProgress(30);
       let parsedData = await data.json();
       setProgress(50);
-      setArticles(parsedData.articles);
+      setArticles(parsedData?.articles || []);
       setTotalResults(parsedData.totalResults);
       setLoading(false);
       setProgress(100);
@@ -36,10 +36,7 @@ function News(props) {
     setLoading(true);
     let data = await fetch(url);
     let parsedData = await data.json();
-    console.log("articles.length:", articles.length);
-    console.log("totalResults:", parsedData.totalResults);
-    console.log("new articles:", parsedData.articles.length);
-    if (!parsedData.articles || parsedData.articles.length === 0) {
+    if (!parsedData?.articles?.length) {
       setHasMore(false);
       setLoading(false);
       return;

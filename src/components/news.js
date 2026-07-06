@@ -12,12 +12,14 @@ function News(props) {
   const capitalize = (type) => {
     return type.charAt(0).toUpperCase() + type.slice(1);
   };
-  const { category, pageSize, apiKey, setProgress } = props;
+  // const { category, pageSize,apiKey, setProgress } = props;
+  const { category, pageSize, setProgress } = props;
   useEffect(() => {
     document.title = `${capitalize(category)} - NewsSphere`;
     const componentDidMount = async () => {
       setProgress(10);
-      const url = `https://newsapi.org/v2/top-headlines?country=us&page=1&pageSize=${pageSize}&category=${category}&apiKey=${apiKey}`;
+      // const url = `https://newsapi.org/v2/top-headlines?country=us&page=1&pageSize=${pageSize}&category=${category}&apiKey=${apiKey}`;
+      const url = `/.netlify/functions/news?country=us&page=1&pageSize=${pageSize}&category=${category}`;
       setLoading(true);
       let data = await fetch(url);
       setProgress(30);
@@ -29,9 +31,10 @@ function News(props) {
       setProgress(100);
     };
     componentDidMount();
-  }, [category, pageSize, apiKey, setProgress]);
+  }, [category, pageSize, setProgress]);
   const fetchMoreData = async () => {
-    const url = `https://newsapi.org/v2/top-headlines?country=us&page=${page + 1}&pageSize=${pageSize} &category=${category}&apiKey=${apiKey}`;
+    const url = `/.netlify/functions/news?country=us&page=${page + 1}&pageSize=${pageSize}&category=${category}`;
+    // const url = `https://newsapi.org/v2/top-headlines?country=us&page=${page + 1}&pageSize=${pageSize}&category=${category}&apiKey=${apiKey}`;
     setPage(page + 1);
     setLoading(true);
     let data = await fetch(url);
@@ -60,7 +63,6 @@ function News(props) {
         <div className="container my-2">
           <div className="row ">
             {articles.map((element) => {
-              console.log(element.url);
               return (
                 <div className="col-md-4" key={element.url}>
                   <NewsItem
